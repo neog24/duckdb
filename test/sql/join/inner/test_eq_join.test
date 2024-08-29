@@ -1,0 +1,25 @@
+# name: test/sql/join/inner/test_eq_ineq_join.test
+# description: Equality joins
+# group: [inner]
+
+statement ok
+PRAGMA enable_verification
+
+statement ok
+CREATE TABLE test (a INTEGER, b INTEGER);
+
+statement ok
+INSERT INTO test VALUES (11, 1), (12, 2), (13, 3)
+
+statement ok
+CREATE TABLE test2 (a INTEGER, c INTEGER);
+
+statement ok
+INSERT INTO test2 VALUES (11, 4), (12, 5), (13, 6)
+
+query III
+SELECT test.a, b, c FROM test, test2 WHERE test.a = test2.a ORDER BY test.a;
+----
+11	1	4
+12	2	5
+13	3	6
